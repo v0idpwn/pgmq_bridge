@@ -12,7 +12,7 @@ defmodule PgmqBridge.SettingsFixtures do
       attrs
       |> Enum.into(%{
         config: %{},
-        kind: "some kind",
+        kind: "pgmq",
         name: "some name"
       })
       |> PgmqBridge.Settings.create_peer()

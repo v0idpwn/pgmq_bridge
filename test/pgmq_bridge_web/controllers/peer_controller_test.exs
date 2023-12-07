@@ -8,13 +8,15 @@ defmodule PgmqBridgeWeb.PeerControllerTest do
   @create_attrs %{
     name: "some name",
     config: %{},
-    kind: "some kind"
+    kind: "pgmq"
   }
+
   @update_attrs %{
     name: "some updated name",
     config: %{},
-    kind: "some updated kind"
+    kind: "sqs"
   }
+
   @invalid_attrs %{name: nil, config: nil, kind: nil}
 
   setup %{conn: conn} do
@@ -38,7 +40,7 @@ defmodule PgmqBridgeWeb.PeerControllerTest do
       assert %{
                "id" => ^id,
                "config" => %{},
-               "kind" => "some kind",
+               "kind" => "pgmq",
                "name" => "some name"
              } = json_response(conn, 200)["data"]
     end
@@ -61,7 +63,7 @@ defmodule PgmqBridgeWeb.PeerControllerTest do
       assert %{
                "id" => ^id,
                "config" => %{},
-               "kind" => "some updated kind",
+               "kind" => "sqs",
                "name" => "some updated name"
              } = json_response(conn, 200)["data"]
     end

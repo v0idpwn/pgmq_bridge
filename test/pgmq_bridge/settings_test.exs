@@ -21,12 +21,12 @@ defmodule PgmqBridge.SettingsTest do
     end
 
     test "create_peer/1 with valid data creates a peer" do
-      valid_attrs = %{name: "some name", config: %{}, kind: "some kind"}
+      valid_attrs = %{name: "some name", config: %{}, kind: "pgmq"}
 
       assert {:ok, %Peer{} = peer} = Settings.create_peer(valid_attrs)
       assert peer.name == "some name"
       assert peer.config == %{}
-      assert peer.kind == "some kind"
+      assert peer.kind == :pgmq
     end
 
     test "create_peer/1 with invalid data returns error changeset" do
@@ -35,12 +35,12 @@ defmodule PgmqBridge.SettingsTest do
 
     test "update_peer/2 with valid data updates the peer" do
       peer = peer_fixture()
-      update_attrs = %{name: "some updated name", config: %{}, kind: "some updated kind"}
+      update_attrs = %{name: "some updated name", config: %{}, kind: "sqs"}
 
       assert {:ok, %Peer{} = peer} = Settings.update_peer(peer, update_attrs)
       assert peer.name == "some updated name"
       assert peer.config == %{}
-      assert peer.kind == "some updated kind"
+      assert peer.kind == :sqs
     end
 
     test "update_peer/2 with invalid data returns error changeset" do
