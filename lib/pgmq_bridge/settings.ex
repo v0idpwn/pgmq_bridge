@@ -1,8 +1,10 @@
 defmodule PgmqBridge.Settings do
   import Ecto.Query, warn: false
+
   alias PgmqBridge.Repo
   alias PgmqBridge.Queues
 
+  alias PgmqBridge.Settings.Mapping
   alias PgmqBridge.Settings.Peer
 
   def list_peers do
@@ -31,49 +33,12 @@ defmodule PgmqBridge.Settings do
     Peer.changeset(peer, attrs)
   end
 
-  alias PgmqBridge.Settings.Mapping
-
-  @doc """
-  Returns the list of mappings.
-
-  ## Examples
-
-      iex> list_mappings()
-      [%Mapping{}, ...]
-
-  """
   def list_mappings do
     Repo.all(Mapping)
   end
 
-  @doc """
-  Gets a single mapping.
-
-  Raises `Ecto.NoResultsError` if the Mapping does not exist.
-
-  ## Examples
-
-      iex> get_mapping!(123)
-      %Mapping{}
-
-      iex> get_mapping!(456)
-      ** (Ecto.NoResultsError)
-
-  """
   def get_mapping!(id), do: Repo.get!(Mapping, id)
 
-  @doc """
-  Creates a mapping.
-
-  ## Examples
-
-      iex> create_mapping(%{field: value})
-      {:ok, %Mapping{}}
-
-      iex> create_mapping(%{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
   def create_mapping(attrs \\ %{}) do
     Repo.transaction(fn ->
       %Mapping{}
@@ -90,31 +55,10 @@ defmodule PgmqBridge.Settings do
     end)
   end
 
-  @doc """
-  Deletes a mapping.
-
-  ## Examples
-
-      iex> delete_mapping(mapping)
-      {:ok, %Mapping{}}
-
-      iex> delete_mapping(mapping)
-      {:error, %Ecto.Changeset{}}
-
-  """
   def delete_mapping(%Mapping{} = mapping) do
     Repo.delete(mapping)
   end
 
-  @doc """
-  Returns an `%Ecto.Changeset{}` for tracking mapping changes.
-
-  ## Examples
-
-      iex> change_mapping(mapping)
-      %Ecto.Changeset{data: %Mapping{}}
-
-  """
   def change_mapping(%Mapping{} = mapping, attrs \\ %{}) do
     Mapping.changeset(mapping, attrs)
   end
