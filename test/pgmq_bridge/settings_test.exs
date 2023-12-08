@@ -83,22 +83,33 @@ defmodule PgmqBridge.SettingsTest do
     end
 
     test "create_mapping/1 with valid data creates a mapping" do
+      peer = peer_fixture()
+
       valid_attrs = %{
         source_queue: "some_source_queue",
         sink_queue: "some_sink_queue",
-        local_queue: "some_local_queue"
+        local_queue: "some_local_queue",
+        source_id: peer.id,
+        sink_id: peer.id
       }
 
       assert {:ok, %Mapping{} = mapping} = Settings.create_mapping(valid_attrs)
       assert mapping.source_queue == "some_source_queue"
       assert mapping.sink_queue == "some_sink_queue"
       assert mapping.local_queue == "some_local_queue"
+      assert mapping.source_id == peer.id
+      assert mapping.sink_id == peer.id
+      assert Repo.preload(mapping, :sink).sink == peer
     end
 
     test "create_mapping/1 without local_queue auto-generates a name" do
+      peer = peer_fixture()
+
       valid_attrs = %{
         source_queue: "some_source_queue",
-        sink_queue: "some_sink_queue"
+        sink_queue: "some_sink_queue",
+        source_id: peer.id,
+        sink_id: peer.id
       }
 
       assert {:ok, %Mapping{local_queue: local_queue}} = Settings.create_mapping(valid_attrs)

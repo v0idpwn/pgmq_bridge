@@ -2,12 +2,14 @@ defmodule PgmqBridge.Settings.Mapping do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias PgmqBridge.Settings.Peer
+
   schema "mappings" do
     field :source_queue, :string
     field :sink_queue, :string
     field :local_queue, :string, autogenerate: {__MODULE__, :autogen_local_queue, []}
-    field :source_peer, :id
-    field :sink_peer, :id
+    belongs_to :source, Peer, source: :source_peer
+    belongs_to :sink, Peer, source: :sink_peer
 
     timestamps(type: :utc_datetime)
   end
@@ -17,8 +19,8 @@ defmodule PgmqBridge.Settings.Mapping do
   @doc false
   def changeset(mapping, attrs) do
     mapping
-    |> cast(attrs, [:source_queue, :sink_queue, :local_queue])
-    |> validate_required([:source_queue, :sink_queue])
+    |> cast(attrs, [:source_queue, :sink_queue, :local_queue, :source_id, :sink_id])
+    |> validate_required([:source_queue, :sink_queue, :source_id, :sink_id])
     |> validate_queue_name(:source_queue)
     |> validate_queue_name(:sink_queue)
     |> validate_queue_name(:local_queue)
