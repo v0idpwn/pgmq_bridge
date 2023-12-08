@@ -120,27 +120,6 @@ defmodule PgmqBridge.SettingsTest do
       assert {:error, %Ecto.Changeset{}} = Settings.create_mapping(@invalid_attrs)
     end
 
-    test "update_mapping/2 with valid data updates the mapping" do
-      mapping = mapping_fixture()
-
-      update_attrs = %{
-        source_queue: "some_updated_source_queue",
-        sink_queue: "some_updated_sink_queue",
-        local_queue: "some_updated_local_queue"
-      }
-
-      assert {:ok, %Mapping{} = mapping} = Settings.update_mapping(mapping, update_attrs)
-      assert mapping.source_queue == "some_updated_source_queue"
-      assert mapping.sink_queue == "some_updated_sink_queue"
-      assert mapping.local_queue == "some_updated_local_queue"
-    end
-
-    test "update_mapping/2 with invalid data returns error changeset" do
-      mapping = mapping_fixture()
-      assert {:error, %Ecto.Changeset{}} = Settings.update_mapping(mapping, @invalid_attrs)
-      assert mapping == Settings.get_mapping!(mapping.id)
-    end
-
     test "delete_mapping/1 deletes the mapping" do
       mapping = mapping_fixture()
       assert {:ok, %Mapping{}} = Settings.delete_mapping(mapping)

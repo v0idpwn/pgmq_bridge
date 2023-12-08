@@ -3,8 +3,6 @@ defmodule PgmqBridgeWeb.MappingControllerTest do
 
   import PgmqBridge.SettingsFixtures
 
-  alias PgmqBridge.Settings.Mapping
-
   @invalid_attrs %{source_queue: nil, sink_queue: nil, local_queue: nil}
 
   setup %{conn: conn} do
@@ -39,33 +37,6 @@ defmodule PgmqBridgeWeb.MappingControllerTest do
     end
   end
 
-  describe "update mapping" do
-    setup [:create_mapping]
-
-    test "renders mapping when data is valid", %{
-      conn: conn,
-      peer: peer,
-      mapping: %Mapping{id: id} = mapping
-    } do
-      conn = put(conn, ~p"/api/mappings/#{mapping}", mapping: update_attrs(peer))
-      assert %{"id" => ^id} = json_response(conn, 200)["data"]
-
-      conn = get(conn, ~p"/api/mappings/#{id}")
-
-      assert %{
-               "id" => ^id,
-               "local_queue" => "some_updated_local_queue",
-               "sink_queue" => "some_updated_sink_queue",
-               "source_queue" => "some_updated_source_queue"
-             } = json_response(conn, 200)["data"]
-    end
-
-    test "renders errors when data is invalid", %{conn: conn, mapping: mapping} do
-      conn = put(conn, ~p"/api/mappings/#{mapping}", mapping: @invalid_attrs)
-      assert json_response(conn, 422)["errors"] != %{}
-    end
-  end
-
   describe "delete mapping" do
     setup [:create_mapping]
 
@@ -89,16 +60,6 @@ defmodule PgmqBridgeWeb.MappingControllerTest do
       source_queue: "some_source_queue",
       sink_queue: "some_sink_queue",
       local_queue: "some_local_queue",
-      source_id: peer.id,
-      sink_id: peer.id
-    }
-  end
-
-  defp update_attrs(peer) do
-    %{
-      source_queue: "some_updated_source_queue",
-      sink_queue: "some_updated_sink_queue",
-      local_queue: "some_updated_local_queue",
       source_id: peer.id,
       sink_id: peer.id
     }

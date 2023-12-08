@@ -25,14 +25,6 @@ defmodule PgmqBridgeWeb.MappingController do
     render(conn, :show, mapping: mapping)
   end
 
-  def update(conn, %{"id" => id, "mapping" => mapping_params}) do
-    mapping = Settings.get_mapping!(id)
-
-    with {:ok, %Mapping{} = mapping} <- Settings.update_mapping(mapping, mapping_params) do
-      render(conn, :show, mapping: mapping)
-    end
-  end
-
   def delete(conn, %{"id" => id}) do
     mapping = Settings.get_mapping!(id)
 

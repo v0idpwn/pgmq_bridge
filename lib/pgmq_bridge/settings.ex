@@ -91,24 +91,6 @@ defmodule PgmqBridge.Settings do
   end
 
   @doc """
-  Updates a mapping.
-
-  ## Examples
-
-      iex> update_mapping(mapping, %{field: new_value})
-      {:ok, %Mapping{}}
-
-      iex> update_mapping(mapping, %{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def update_mapping(%Mapping{} = mapping, attrs) do
-    mapping
-    |> Mapping.changeset(attrs)
-    |> Repo.update()
-  end
-
-  @doc """
   Deletes a mapping.
 
   ## Examples
