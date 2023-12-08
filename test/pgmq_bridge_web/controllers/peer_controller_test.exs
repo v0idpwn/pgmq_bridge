@@ -7,7 +7,7 @@ defmodule PgmqBridgeWeb.PeerControllerTest do
 
   @create_attrs %{
     name: "some name",
-    config: %{},
+    config: %{"connection_string" => "postgres://localhost"},
     kind: "pgmq"
   }
 

@@ -21,11 +21,15 @@ defmodule PgmqBridge.SettingsTest do
     end
 
     test "create_peer/1 with valid data creates a peer" do
-      valid_attrs = %{name: "some name", config: %{}, kind: "pgmq"}
+      valid_attrs = %{
+        name: "some name",
+        config: %{"connection_string" => "postgres://localhost"},
+        kind: "pgmq"
+      }
 
       assert {:ok, %Peer{} = peer} = Settings.create_peer(valid_attrs)
       assert peer.name == "some name"
-      assert peer.config == %{}
+      assert peer.config == %{"connection_string" => "postgres://localhost"}
       assert peer.kind == :pgmq
     end
 

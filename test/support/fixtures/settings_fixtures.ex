@@ -3,7 +3,9 @@ defmodule PgmqBridge.SettingsFixtures do
     {:ok, peer} =
       attrs
       |> Enum.into(%{
-        config: %{},
+        config: %{
+          "connection_string" => "postgres://postgres:postgres@localhost:5432/postgres"
+        },
         kind: "pgmq",
         name: "some name"
       })
