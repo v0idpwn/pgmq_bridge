@@ -100,6 +100,9 @@ defmodule PgmqBridge.SettingsTest do
       assert mapping.source_id == peer.id
       assert mapping.sink_id == peer.id
       assert Repo.preload(mapping, :sink).sink == peer
+
+      # Queue is created:
+      assert queue_exists?(mapping.local_queue)
     end
 
     test "create_mapping/1 without local_queue auto-generates a name" do
@@ -124,11 +127,27 @@ defmodule PgmqBridge.SettingsTest do
       mapping = mapping_fixture()
       assert {:ok, %Mapping{}} = Settings.delete_mapping(mapping)
       assert_raise Ecto.NoResultsError, fn -> Settings.get_mapping!(mapping.id) end
+      refute queue_exists?(mapping.local_queue)
     end
 
     test "change_mapping/1 returns a mapping changeset" do
       mapping = mapping_fixture()
       assert %Ecto.Changeset{} = Settings.change_mapping(mapping)
     end
+  end
+
+  def queue_exists?(name) do
+    %Postgrex.Result{rows: [[result]]} =
+      Repo.query!("""
+      SELECT EXISTS (
+        SELECT FROM
+          pg_tables
+        WHERE
+          schemaname = 'pgmq' AND
+          tablename = 'q_#{name}'
+      )
+      """)
+
+    result
   end
 end
