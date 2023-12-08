@@ -4,6 +4,10 @@ if System.get_env("PHX_SERVER") do
   config :pgmq_bridge, PgmqBridgeWeb.Endpoint, server: true
 end
 
+if url = System.get_env("DATABASE_URL") do
+  config :pgmq_bridge, PgmqBridge.Repo, url: url
+end
+
 if config_env() == :prod do
   database_url =
     System.get_env("DATABASE_URL") ||
