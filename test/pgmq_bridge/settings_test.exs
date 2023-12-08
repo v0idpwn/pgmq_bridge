@@ -84,15 +84,15 @@ defmodule PgmqBridge.SettingsTest do
 
     test "create_mapping/1 with valid data creates a mapping" do
       valid_attrs = %{
-        source_queue: "some source_queue",
-        sink_queue: "some sink_queue",
-        local_queue: "some local_queue"
+        source_queue: "some_source_queue",
+        sink_queue: "some_sink_queue",
+        local_queue: "some_local_queue"
       }
 
       assert {:ok, %Mapping{} = mapping} = Settings.create_mapping(valid_attrs)
-      assert mapping.source_queue == "some source_queue"
-      assert mapping.sink_queue == "some sink_queue"
-      assert mapping.local_queue == "some local_queue"
+      assert mapping.source_queue == "some_source_queue"
+      assert mapping.sink_queue == "some_sink_queue"
+      assert mapping.local_queue == "some_local_queue"
     end
 
     test "create_mapping/1 with invalid data returns error changeset" do
@@ -103,15 +103,15 @@ defmodule PgmqBridge.SettingsTest do
       mapping = mapping_fixture()
 
       update_attrs = %{
-        source_queue: "some updated source_queue",
-        sink_queue: "some updated sink_queue",
-        local_queue: "some updated local_queue"
+        source_queue: "some_updated_source_queue",
+        sink_queue: "some_updated_sink_queue",
+        local_queue: "some_updated_local_queue"
       }
 
       assert {:ok, %Mapping{} = mapping} = Settings.update_mapping(mapping, update_attrs)
-      assert mapping.source_queue == "some updated source_queue"
-      assert mapping.sink_queue == "some updated sink_queue"
-      assert mapping.local_queue == "some updated local_queue"
+      assert mapping.source_queue == "some_updated_source_queue"
+      assert mapping.sink_queue == "some_updated_sink_queue"
+      assert mapping.local_queue == "some_updated_local_queue"
     end
 
     test "update_mapping/2 with invalid data returns error changeset" do

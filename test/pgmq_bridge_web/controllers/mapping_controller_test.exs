@@ -6,14 +6,14 @@ defmodule PgmqBridgeWeb.MappingControllerTest do
   alias PgmqBridge.Settings.Mapping
 
   @create_attrs %{
-    source_queue: "some source_queue",
-    sink_queue: "some sink_queue",
-    local_queue: "some local_queue"
+    source_queue: "some_source_queue",
+    sink_queue: "some_sink_queue",
+    local_queue: "some_local_queue"
   }
   @update_attrs %{
-    source_queue: "some updated source_queue",
-    sink_queue: "some updated sink_queue",
-    local_queue: "some updated local_queue"
+    source_queue: "some_updated_source_queue",
+    sink_queue: "some_updated_sink_queue",
+    local_queue: "some_updated_local_queue"
   }
   @invalid_attrs %{source_queue: nil, sink_queue: nil, local_queue: nil}
 
@@ -37,9 +37,9 @@ defmodule PgmqBridgeWeb.MappingControllerTest do
 
       assert %{
                "id" => ^id,
-               "local_queue" => "some local_queue",
-               "sink_queue" => "some sink_queue",
-               "source_queue" => "some source_queue"
+               "local_queue" => "some_local_queue",
+               "sink_queue" => "some_sink_queue",
+               "source_queue" => "some_source_queue"
              } = json_response(conn, 200)["data"]
     end
 
@@ -60,9 +60,9 @@ defmodule PgmqBridgeWeb.MappingControllerTest do
 
       assert %{
                "id" => ^id,
-               "local_queue" => "some updated local_queue",
-               "sink_queue" => "some updated sink_queue",
-               "source_queue" => "some updated source_queue"
+               "local_queue" => "some_updated_local_queue",
+               "sink_queue" => "some_updated_sink_queue",
+               "source_queue" => "some_updated_source_queue"
              } = json_response(conn, 200)["data"]
     end
 

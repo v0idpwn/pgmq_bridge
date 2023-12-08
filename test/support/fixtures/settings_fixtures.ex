@@ -21,9 +21,9 @@ defmodule PgmqBridge.SettingsFixtures do
     {:ok, mapping} =
       attrs
       |> Enum.into(%{
-        local_queue: "some local_queue",
-        sink_queue: "some sink_queue",
-        source_queue: "some source_queue"
+        local_queue: "some_local_queue",
+        sink_queue: "some_sink_queue",
+        source_queue: "some_source_queue"
       })
       |> PgmqBridge.Settings.create_mapping()
 

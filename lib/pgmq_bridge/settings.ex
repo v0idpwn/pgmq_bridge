@@ -82,10 +82,10 @@ defmodule PgmqBridge.Settings do
       |> case do
         {:ok, mapping} ->
           :ok = Queues.create_queue(mapping.local_queue)
-          {:ok, mapping}
+          mapping
 
-        error ->
-          error
+        {:error, error} ->
+          Repo.rollback(error)
       end
     end)
   end
