@@ -13,4 +13,20 @@ defmodule PgmqBridge.SettingsFixtures do
 
     peer
   end
+
+  @doc """
+  Generate a mapping.
+  """
+  def mapping_fixture(attrs \\ %{}) do
+    {:ok, mapping} =
+      attrs
+      |> Enum.into(%{
+        local_queue: "some local_queue",
+        sink_queue: "some sink_queue",
+        source_queue: "some source_queue"
+      })
+      |> PgmqBridge.Settings.create_mapping()
+
+    mapping
+  end
 end

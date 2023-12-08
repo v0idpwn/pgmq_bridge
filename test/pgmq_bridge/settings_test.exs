@@ -64,4 +64,71 @@ defmodule PgmqBridge.SettingsTest do
       assert %Ecto.Changeset{} = Settings.change_peer(peer)
     end
   end
+
+  describe "mappings" do
+    alias PgmqBridge.Settings.Mapping
+
+    import PgmqBridge.SettingsFixtures
+
+    @invalid_attrs %{source_queue: nil, sink_queue: nil, local_queue: nil}
+
+    test "list_mappings/0 returns all mappings" do
+      mapping = mapping_fixture()
+      assert Settings.list_mappings() == [mapping]
+    end
+
+    test "get_mapping!/1 returns the mapping with given id" do
+      mapping = mapping_fixture()
+      assert Settings.get_mapping!(mapping.id) == mapping
+    end
+
+    test "create_mapping/1 with valid data creates a mapping" do
+      valid_attrs = %{
+        source_queue: "some source_queue",
+        sink_queue: "some sink_queue",
+        local_queue: "some local_queue"
+      }
+
+      assert {:ok, %Mapping{} = mapping} = Settings.create_mapping(valid_attrs)
+      assert mapping.source_queue == "some source_queue"
+      assert mapping.sink_queue == "some sink_queue"
+      assert mapping.local_queue == "some local_queue"
+    end
+
+    test "create_mapping/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Settings.create_mapping(@invalid_attrs)
+    end
+
+    test "update_mapping/2 with valid data updates the mapping" do
+      mapping = mapping_fixture()
+
+      update_attrs = %{
+        source_queue: "some updated source_queue",
+        sink_queue: "some updated sink_queue",
+        local_queue: "some updated local_queue"
+      }
+
+      assert {:ok, %Mapping{} = mapping} = Settings.update_mapping(mapping, update_attrs)
+      assert mapping.source_queue == "some updated source_queue"
+      assert mapping.sink_queue == "some updated sink_queue"
+      assert mapping.local_queue == "some updated local_queue"
+    end
+
+    test "update_mapping/2 with invalid data returns error changeset" do
+      mapping = mapping_fixture()
+      assert {:error, %Ecto.Changeset{}} = Settings.update_mapping(mapping, @invalid_attrs)
+      assert mapping == Settings.get_mapping!(mapping.id)
+    end
+
+    test "delete_mapping/1 deletes the mapping" do
+      mapping = mapping_fixture()
+      assert {:ok, %Mapping{}} = Settings.delete_mapping(mapping)
+      assert_raise Ecto.NoResultsError, fn -> Settings.get_mapping!(mapping.id) end
+    end
+
+    test "change_mapping/1 returns a mapping changeset" do
+      mapping = mapping_fixture()
+      assert %Ecto.Changeset{} = Settings.change_mapping(mapping)
+    end
+  end
 end

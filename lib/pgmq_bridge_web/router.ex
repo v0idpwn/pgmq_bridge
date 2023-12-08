@@ -8,5 +8,6 @@ defmodule PgmqBridgeWeb.Router do
   scope "/api", PgmqBridgeWeb do
     pipe_through :api
     resources "/peers", PeerController, except: [:new, :edit]
+    resources "/mappings", MappingController, except: [:new, :edit]
   end
 end
