@@ -33,5 +33,6 @@ defmodule PgmqBridge.Settings.Mapping do
   def autogen_local_queue() do
     Ecto.UUID.generate()
     |> Base.encode64(padding: false)
+    |> String.slice(0..40)
   end
 end

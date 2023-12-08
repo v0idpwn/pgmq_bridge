@@ -95,6 +95,16 @@ defmodule PgmqBridge.SettingsTest do
       assert mapping.local_queue == "some_local_queue"
     end
 
+    test "create_mapping/1 without local_queue auto-generates a name" do
+      valid_attrs = %{
+        source_queue: "some_source_queue",
+        sink_queue: "some_sink_queue"
+      }
+
+      assert {:ok, %Mapping{local_queue: local_queue}} = Settings.create_mapping(valid_attrs)
+      assert is_binary(local_queue)
+    end
+
     test "create_mapping/1 with invalid data returns error changeset" do
       assert {:error, %Ecto.Changeset{}} = Settings.create_mapping(@invalid_attrs)
     end
