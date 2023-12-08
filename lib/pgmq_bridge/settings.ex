@@ -56,7 +56,11 @@ defmodule PgmqBridge.Settings do
   end
 
   def delete_mapping(%Mapping{} = mapping) do
-    Repo.delete(mapping)
+    Repo.transaction(fn ->
+      {:ok, mapping} = Repo.delete(mapping)
+      :ok = Queues.drop_queue(mapping.local_queue)
+      mapping
+    end)
   end
 
   def change_mapping(%Mapping{} = mapping, attrs \\ %{}) do
