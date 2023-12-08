@@ -1,6 +1,7 @@
 defmodule PgmqBridge.Settings do
   import Ecto.Query, warn: false
   alias PgmqBridge.Repo
+  alias PgmqBridge.Queues
 
   alias PgmqBridge.Settings.Peer
 
@@ -74,9 +75,19 @@ defmodule PgmqBridge.Settings do
 
   """
   def create_mapping(attrs \\ %{}) do
-    %Mapping{}
-    |> Mapping.changeset(attrs)
-    |> Repo.insert()
+    Repo.transaction(fn ->
+      %Mapping{}
+      |> Mapping.changeset(attrs)
+      |> Repo.insert()
+      |> case do
+        {:ok, mapping} ->
+          :ok = Queues.create_queue(mapping.local_queue)
+          {:ok, mapping}
+
+        error ->
+          error
+      end
+    end)
   end
 
   @doc """
