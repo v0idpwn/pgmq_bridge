@@ -73,8 +73,8 @@ defmodule PgmqBridge.SettingsTest do
     @invalid_attrs %{source_queue: nil, sink_queue: nil, local_queue: nil}
 
     test "list_mappings/0 returns all mappings" do
-      mapping = mapping_fixture()
-      assert Settings.list_mappings() == [mapping]
+      %{id: mapping_id} = mapping_fixture()
+      assert [%Mapping{id: ^mapping_id}] = Settings.list_mappings()
     end
 
     test "get_mapping!/1 returns the mapping with given id" do

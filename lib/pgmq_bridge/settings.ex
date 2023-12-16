@@ -34,7 +34,9 @@ defmodule PgmqBridge.Settings do
   end
 
   def list_mappings do
-    Repo.all(Mapping)
+    Mapping
+    |> Repo.all()
+    |> Repo.preload([:source, :sink])
   end
 
   def get_mapping!(id), do: Repo.get!(Mapping, id)
