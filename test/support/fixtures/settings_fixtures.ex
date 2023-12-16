@@ -32,5 +32,6 @@ defmodule PgmqBridge.SettingsFixtures do
       |> PgmqBridge.Settings.create_mapping()
 
     mapping
+    |> PgmqBridge.Repo.preload([:sink, :source])
   end
 end

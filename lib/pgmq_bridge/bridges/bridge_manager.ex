@@ -15,7 +15,9 @@ defmodule PgmqBridge.Bridges.BridgeManager do
     mapping = %Mapping{} = Keyword.fetch!(opts, :mapping)
     :ok = validate_mapping!(mapping)
 
-    GenServer.start_link(__MODULE__, %State{mapping: mapping, started?: false})
+    name = Keyword.fetch!(opts, :name)
+
+    GenServer.start_link(__MODULE__, %State{mapping: mapping, started?: false}, name: name)
   end
 
   @impl GenServer
@@ -29,8 +31,8 @@ defmodule PgmqBridge.Bridges.BridgeManager do
   end
 
   defp validate_mapping!(mapping) do
-    Ecto.assoc_loaded?(mapping.source) || raise "Missing source"
-    Ecto.assoc_loaded?(mapping.sink) || raise "Missing sink"
+    Ecto.assoc_loaded?(mapping.source) || raise ArgumentError, "missing source"
+    Ecto.assoc_loaded?(mapping.sink) || raise ArgumentError, "missing sink"
     :ok
   end
 end

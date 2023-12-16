@@ -10,6 +10,7 @@ defmodule PgmqBridge.Application do
       PgmqBridge.Repo,
       {DNSCluster, query: Application.get_env(:pgmq_bridge, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: PgmqBridge.PubSub},
+      {Registry, name: PgmqBridge.BridgeRegistry, keys: :unique},
       {DynamicSupervisor, name: PgmqBridge.BridgeSupervisor},
       {PgmqBridge.Bridges.ColdStartup, []},
       PgmqBridgeWeb.Endpoint

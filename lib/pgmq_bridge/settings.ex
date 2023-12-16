@@ -39,7 +39,7 @@ defmodule PgmqBridge.Settings do
     |> Repo.preload([:source, :sink])
   end
 
-  def get_mapping!(id), do: Repo.get!(Mapping, id)
+  def get_mapping!(id), do: Repo.get!(Mapping, id) |> Repo.preload([:sink, :source])
 
   def create_mapping(attrs \\ %{}) do
     Repo.transaction(fn ->
