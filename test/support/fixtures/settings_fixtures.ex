@@ -4,7 +4,8 @@ defmodule PgmqBridge.SettingsFixtures do
       attrs
       |> Enum.into(%{
         config: %{
-          "connection_string" => "postgres://postgres:postgres@localhost:5432/postgres"
+          "connection_string" =>
+            System.get_env("DATABASE_URL", "postgres://postgres:postgres@localhost:5432/postgres")
         },
         kind: "pgmq",
         name: "some name"

@@ -17,7 +17,6 @@ defmodule PgmqBridge.BridgesTest do
 
       assert_raise(ArgumentError, "missing source", fn ->
         Bridges.start_bridge(m1, [])
-        |> IO.inspect()
       end)
 
       m2 = Map.put(m0, :sink, %Ecto.Association.NotLoaded{})

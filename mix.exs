@@ -34,7 +34,7 @@ defmodule PgmqBridge.MixProject do
       {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.1.1"},
       {:bandit, ">= 0.0.0"},
-      {:pgmq, "~> 0.2"},
+      {:pgmq, "~> 0.3"},
       {:off_broadway_pgmq, "~> 0.1"}
     ]
   end
